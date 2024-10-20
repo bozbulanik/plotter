@@ -5,7 +5,8 @@ import pynput
 
 from pynput import keyboard, mouse
 class TerminalGraph:
-    def __init__(self, width=80, height=20, x_label="X", y_label="Y", x_divisions=5, y_divisions=5, x_min = 0, x_max = 0, y_min = 0, y_max=0):
+    def __init__(self, title="", width=80, height=20, x_label="X", y_label="Y", x_divisions=5, y_divisions=5, x_min = 0, x_max = 0, y_min = 0, y_max=0):
+        self.title = title
         self.width = width
         self.height = height
         self.x_label = x_label
@@ -99,7 +100,11 @@ class TerminalGraph:
         for i, char in enumerate(self.y_label):
             if i < self.height - 5:  # Ensure it doesn't overflow
                 self.canvas[1][i] = char
-
+        # Title
+        title_label_pos = self.width // 2 - len(self.title) // 2
+        for i, char in enumerate(self.title):
+            self.canvas[0][title_label_pos + i] = char
+        
         # Add tick marks and values
         for i in range(self.x_divisions):
             x_tick_pos = 6 + (self.plot_width - 1) * i // (self.x_divisions - 1)
@@ -147,6 +152,10 @@ class TerminalGraph:
         self.add_axes(time_chart)
         for row in self.canvas:
             print(''.join(row))
+
+    # FOR TUI
+    def get_size(self):
+        return [self.width, self.height]
 
 """
 def main():

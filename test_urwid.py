@@ -4,11 +4,11 @@ import time
 
 class TerminalGraphWidget(urwid.WidgetWrap):
     def __init__(self, graph):
-        self.text = urwid.Text("")
+        self.text = urwid.Text("", align="center")
         self.graph = graph
         self.line_box = urwid.LineBox(self.text)
-        self.filler = urwid.Filler(self.line_box)
-        self.padding = urwid.Padding(self.filler)
+        self.filler = urwid.Filler(self.line_box, valign="middle")
+        self.padding = urwid.Padding(self.filler, align="center", width=int(self.graph.get_size()[0]+10))
         super().__init__(self.padding)
 
     def update(self):
@@ -19,7 +19,7 @@ class TerminalGraphWidget(urwid.WidgetWrap):
 
 class PlotApp(object):
     def __init__(self):
-        self.graph = TerminalGraph(width=80, height=20, x_label="X", y_label="Value", x_divisions=10, y_divisions=16, x_min=0, x_max=15, y_min=0, y_max=15)
+        self.graph = TerminalGraph(title="Urwid Example", width=40, height=10, x_label="X", y_label="Value", x_divisions=5, y_divisions=8, x_min=0, x_max=15, y_min=0, y_max=15)
         self.graph_widget = TerminalGraphWidget(self.graph)
 
 
