@@ -1,0 +1,9 @@
+# environment
+venv/
+
+# pycache
+__pycache__/
+*.pyc
+
+aa
+utils.py
